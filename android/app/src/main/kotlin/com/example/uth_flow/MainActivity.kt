@@ -1,5 +1,7 @@
 package com.example.uth_flow
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
@@ -15,6 +17,7 @@ import kotlin.concurrent.thread
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "com.example.uth_flow/moodle"
+    private val WIDGET_CHANNEL = "com.example.uth_flow/widget"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +29,64 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, WIDGET_CHANNEL).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "updateScheduleWidget" -> {
+                    val data = call.argument<String>("data") ?: (call.arguments as? String) ?: ""
+                    ScheduleWidgetProvider.updateWidgetData(this, data)
+                    result.success(true)
+                }
+                "pinScheduleWidget" -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val appWidgetManager = android.appwidget.AppWidgetManager.getInstance(this)
+                        val myProvider = android.content.ComponentName(this, ScheduleWidgetProvider::class.java)
+                        if (appWidgetManager.isRequestPinAppWidgetSupported) {
+                            try {
+                                val callbackIntent = Intent(this, ScheduleWidgetProvider::class.java).apply {
+                                    action = android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                                }
+                                val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                                } else {
+                                    PendingIntent.FLAG_UPDATE_CURRENT
+                                }
+                                val successCallback = PendingIntent.getBroadcast(this, 0, callbackIntent, flags)
+                                val success = appWidgetManager.requestPinAppWidget(myProvider, null, successCallback)
+                                result.success(success)
+                            } catch (e: Exception) {
+                                result.success(false)
+                            }
+                        } else {
+                            result.success(false)
+                        }
+                    } else {
+                        result.success(false)
+                    }
+                }
+                "isXiaomiDevice" -> {
+                    val isXiaomi = Build.MANUFACTURER.equals("Xiaomi", ignoreCase = true) ||
+                                   Build.MANUFACTURER.equals("Redmi", ignoreCase = true) ||
+                                   Build.MANUFACTURER.equals("POCO", ignoreCase = true)
+                    result.success(isXiaomi)
+                }
+                "openAppSettings" -> {
+                    try {
+                        val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = android.net.Uri.fromParts("package", packageName, null)
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivity(intent)
+                        result.success(true)
+                    } catch (e: Exception) {
+                        result.success(false)
+                    }
+                }
+                else -> {
+                    result.notImplemented()
+                }
+            }
+        }
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             if (call.method == "getMoodleDeadlines") {

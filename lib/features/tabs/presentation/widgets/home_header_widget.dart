@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
+import 'package:uth_flow/core/widgets/bouncing_tap.dart';
 import 'package:uth_flow/features/auth/domain/models/user_model.dart';
 import 'package:uth_flow/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:uth_flow/features/notification/presentation/controllers/notification_controller.dart';
@@ -231,9 +232,9 @@ class HomeHeaderWidget extends ConsumerWidget {
     required String label,
     required VoidCallback onTap,
   }) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return BouncingTap(
       onTap: onTap,
+      scaleFactor: 0.90,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -264,8 +265,9 @@ class HomeHeaderWidget extends ConsumerWidget {
     required VoidCallback onTap,
   }) {
     final showBadge = hasBadge || badgeCount > 0;
-    return GestureDetector(
+    return BouncingTap(
       onTap: onTap,
+      scaleFactor: 0.88,
       child: Container(
         width: 38,
         height: 38,

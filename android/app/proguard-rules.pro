@@ -17,4 +17,21 @@
 -keep class io.flutter.view.** { *; }
 -keep class io.flutter.** { *; }
 -keep class io.flutter.plugins.** { *; }
+-keep class io.flutter.plugins.sharedpreferences.** { *; }
 -dontwarn com.google.android.play.core.**
+
+# Kotlin runtime & coroutines for JNI / package:jni / Pigeon
+-keep class kotlin.Unit { *; }
+-keep class kotlin.Result { *; }
+-keep class kotlin.Result$Failure { *; }
+-keep class kotlin.coroutines.** { *; }
+-keep class kotlin.coroutines.Continuation { *; }
+-keep class kotlin.coroutines.intrinsics.** { *; }
+-keep class kotlin.coroutines.intrinsics.CoroutineSingletons { *; }
+-keep class kotlin.coroutines.intrinsics.IntrinsicsKt { *; }
+-keep class kotlin.jvm.internal.** { *; }
+-dontwarn kotlin.coroutines.**
+
+# App native classes (MainActivity, ScheduleWidgetProvider)
+-keep class com.example.uth_flow.** { *; }
+

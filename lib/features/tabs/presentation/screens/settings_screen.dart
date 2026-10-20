@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
+import 'package:uth_flow/core/widgets/bouncing_tap.dart';
+import 'package:uth_flow/core/widgets/schedule_widget_sheet.dart';
 import 'package:uth_flow/features/academic/domain/models/academic_models.dart';
 import 'package:uth_flow/features/academic/presentation/controllers/academic_controller.dart';
 import 'package:uth_flow/features/academic/presentation/widgets/course_classes_table.dart';
@@ -266,7 +268,83 @@ class SettingsScreen extends ConsumerWidget {
                 ],
               ),
 
-              const SizedBox(height: 28),
+              const SizedBox(height: 20),
+
+              // TIỆN ÍCH MÀN HÌNH CHÍNH (APP WIDGET)
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: isDark ? const Color(0xFF282724) : Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.08)
+                        : Colors.black.withValues(alpha: 0.06),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: primaryColor.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        SolarIconsBold.widget_5,
+                        color: primaryColor,
+                        size: 22,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Tiện ích Lịch học (Widget)',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14.5,
+                              fontWeight: FontWeight.w700,
+                              color: isDark ? Colors.white : const Color(0xFF191919),
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            'Xem ca học ngay trên màn hình chính',
+                            style: GoogleFonts.beVietnamPro(
+                              fontSize: 12,
+                              color: isDark ? Colors.white60 : const Color(0xFF666666),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    BouncingTap(
+                      onTap: () => ScheduleWidgetSheet.show(context),
+                      scaleFactor: 0.94,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'Cài đặt',
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
 
               // 8. QUẢN LÝ TÀI KHOẢN
               SizedBox(

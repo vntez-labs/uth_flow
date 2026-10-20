@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
+import 'package:uth_flow/core/widgets/bouncing_tap.dart';
 import 'package:uth_flow/features/auth/domain/models/saved_account_model.dart';
 import 'package:uth_flow/features/auth/presentation/controllers/auth_controller.dart';
 
@@ -109,15 +110,55 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   const SizedBox(height: 6),
 
                   Text(
-                    'Cổng thông tin sinh viên & đào tạo UTH',
+                    'Dự án mã nguồn mở hỗ trợ xem lịch học',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.beVietnamPro(
                       fontSize: 14,
-                      color: isDark ? Colors.white60 : const Color(0xFF666666),
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? const Color(0xFF2DD4BF) : primaryColor,
                     ),
                   ),
 
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 10),
+
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.08)
+                          : primaryColor.withValues(alpha: 0.08),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.12)
+                            : primaryColor.withValues(alpha: 0.2),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          SolarIconsBold.codeCircle,
+                          size: 14,
+                          color: isDark ? const Color(0xFF2DD4BF) : primaryColor,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'Mã nguồn mở • Hỗ trợ sinh viên UTH',
+                          style: GoogleFonts.beVietnamPro(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w600,
+                            color: isDark
+                                ? const Color(0xFFE5E5E5)
+                                : const Color(0xFF333333),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 28),
 
                   // ==================== TÀI KHOẢN ĐÃ LƯU (ĐĂNG NHẬP 1 CHẠM) ====================
                   if (savedAccounts.isNotEmpty) ...[
@@ -415,43 +456,58 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         const SizedBox(height: 26),
 
                         // Nút Đăng nhập
-                        SizedBox(
-                          height: 52,
-                          child: ElevatedButton(
-                            onPressed: authState.isLoading ? null : _handleLogin,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryColor,
-                              foregroundColor: Colors.white,
-                              disabledBackgroundColor: primaryColor.withValues(alpha: 0.6),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                        BouncingTap(
+                          onTap: authState.isLoading ? null : _handleLogin,
+                          scaleFactor: 0.96,
+                          child: SizedBox(
+                            height: 52,
+                            child: ElevatedButton(
+                              onPressed: authState.isLoading ? null : _handleLogin,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryColor,
+                                foregroundColor: Colors.white,
+                                disabledBackgroundColor: primaryColor.withValues(alpha: 0.6),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
                               ),
-                            ),
-                            child: authState.isLoading
-                                ? const SizedBox(
-                                    width: 22,
-                                    height: 22,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2.4,
-                                    ),
-                                  )
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Đăng nhập',
-                                        style: GoogleFonts.plusJakartaSans(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: -0.2,
-                                        ),
+                              child: authState.isLoading
+                                  ? const SizedBox(
+                                      width: 22,
+                                      height: 22,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2.4,
                                       ),
-                                      const SizedBox(width: 8),
-                                      const Icon(SolarIconsBold.login_2, size: 20),
-                                    ],
-                                  ),
+                                    )
+                                  : Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Đăng nhập',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                            letterSpacing: -0.2,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        const Icon(SolarIconsBold.login_2, size: 20),
+                                      ],
+                                    ),
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 18),
+                        Text(
+                          'Dự án mã nguồn mở hỗ trợ xem lịch học và tra cứu đào tạo cho sinh viên UTH.',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.beVietnamPro(
+                            fontSize: 11.5,
+                            color: isDark ? Colors.white38 : Colors.black45,
+                            height: 1.4,
                           ),
                         ),
                       ],

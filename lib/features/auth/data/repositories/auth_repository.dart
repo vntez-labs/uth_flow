@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uth_flow/core/services/widget_sync_service.dart';
 import 'package:uth_flow/core/storage/secure_storage_service.dart';
 import 'package:uth_flow/features/auth/data/services/uth_portal_service.dart';
 import 'package:uth_flow/features/auth/domain/models/auth_state.dart';
@@ -151,8 +152,9 @@ class AuthRepositoryImpl implements AuthRepository {
     final user = authResult.user;
 
     // 2. Lưu vào SharedPreferences & Secure Storage
-    await _prefs?.setString(tokenKey, token);
-    await _prefs?.setString(userKey, jsonEncode(user.toJson()));
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    await prefs.setString(tokenKey, token);
+    await prefs.setString(userKey, jsonEncode(user.toJson()));
 
     final finalMssv = user.mssv.isNotEmpty ? user.mssv : cleanUsername;
 
@@ -190,8 +192,9 @@ class AuthRepositoryImpl implements AuthRepository {
     await _secureStorage.saveToken(account.token);
     await _secureStorage.saveUser(account.user);
 
-    await _prefs?.setString(tokenKey, account.token);
-    await _prefs?.setString(userKey, jsonEncode(account.user.toJson()));
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    await prefs.setString(tokenKey, account.token);
+    await prefs.setString(userKey, jsonEncode(account.user.toJson()));
 
     if (account.password.isNotEmpty) {
       try {
@@ -204,8 +207,8 @@ class AuthRepositoryImpl implements AuthRepository {
           avatarBase64: account.avatarBase64 ?? authResult.user.avatarBase64,
         );
 
-        await _prefs?.setString(tokenKey, freshToken);
-        await _prefs?.setString(userKey, jsonEncode(freshUser.toJson()));
+        await prefs.setString(tokenKey, freshToken);
+        await prefs.setString(userKey, jsonEncode(freshUser.toJson()));
         await _secureStorage.saveToken(freshToken);
         await _secureStorage.saveUser(freshUser);
 
@@ -242,7 +245,8 @@ class AuthRepositoryImpl implements AuthRepository {
           password: password,
         );
         final freshToken = authResult.token;
-        await _prefs?.setString(tokenKey, freshToken);
+        final prefs = _prefs ?? await SharedPreferences.getInstance();
+        await prefs.setString(tokenKey, freshToken);
         await _secureStorage.saveToken(freshToken);
         return freshToken;
       }
@@ -252,9 +256,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    await _prefs?.remove(tokenKey);
-    await _prefs?.remove(userKey);
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    await prefs.remove(tokenKey);
+    await prefs.remove(userKey);
     await _secureStorage.clearAll();
+    await WidgetSyncService.clearWidget();
   }
 
   @override

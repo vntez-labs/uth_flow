@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uth_flow/core/widgets/bouncing_tap.dart';
 import 'package:uth_flow/features/notification/domain/notification_model.dart';
 import 'package:uth_flow/features/notification/presentation/controllers/notification_controller.dart';
 
@@ -437,30 +438,28 @@ class NotificationsScreen extends ConsumerWidget {
                     ),
                   ),
                   ...notifications.map((item) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                        color: cardBgColor,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: isDark
-                              ? Colors.white.withValues(alpha: 0.06)
-                              : Colors.black.withValues(alpha: 0.04),
-                        ),
+                    return BouncingTap(
+                      onTap: () => _showDetailModal(
+                        context,
+                        item,
+                        isDark,
+                        primaryColor,
                       ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
+                      scaleFactor: 0.98,
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                          color: cardBgColor,
                           borderRadius: BorderRadius.circular(16),
-                          onTap: () => _showDetailModal(
-                            context,
-                            item,
-                            isDark,
-                            primaryColor,
+                          border: Border.all(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.06)
+                                : Colors.black.withValues(alpha: 0.04),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(14),
-                            child: Row(
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(14),
+                          child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
@@ -547,8 +546,7 @@ class NotificationsScreen extends ConsumerWidget {
                             ),
                           ),
                         ),
-                      ),
-                    );
+                      );
                   }),
                 ],
               ),

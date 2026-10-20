@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
+import 'package:uth_flow/core/widgets/bouncing_tap.dart';
 import 'package:uth_flow/features/tabs/domain/portal_menu_model.dart';
 import 'package:uth_flow/features/tabs/domain/portal_menu_utils.dart';
 
@@ -268,15 +269,10 @@ class GroupedMenuSection extends StatelessWidget {
     final icon = PortalMenuUtils.getItemIcon(child.name);
     final isExternal = child.route?.startsWith('http') ?? false;
 
-    return InkWell(
+    return BouncingTap(
       onTap: () =>
           PortalMenuUtils.openRoute(context, child.route, child.name),
-      borderRadius: isLast
-          ? const BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            )
-          : BorderRadius.zero,
+      scaleFactor: 0.98,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 16,

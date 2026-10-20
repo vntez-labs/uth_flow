@@ -25,6 +25,9 @@ dev_dependencies:
   plugin_platform_interface: ^2.1.8
   url_launcher_platform_interface: ^2.3.2
 
+dependency_overrides:
+  shared_preferences_android: '<2.5.0'
+
 flutter:
   uses-material-design: true
   assets:

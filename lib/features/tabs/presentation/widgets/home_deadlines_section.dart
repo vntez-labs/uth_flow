@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uth_flow/core/widgets/bouncing_tap.dart';
 import 'package:uth_flow/features/moodle/presentation/controllers/moodle_controller.dart';
 import 'package:uth_flow/features/tabs/presentation/widgets/sync_moodle_password_sheet.dart';
 
@@ -310,8 +311,8 @@ class _HomeDeadlinesSectionState extends ConsumerState<HomeDeadlinesSection> {
         mainAxisSize: MainAxisSize.min,
         children: filters.map((item) {
           final isSelected = _deadlineFilter == item['key'];
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
+          return BouncingTap(
+            scaleFactor: 0.92,
             onTap: () {
               setState(() {
                 _deadlineFilter = item['key']!;
@@ -367,7 +368,7 @@ class _HomeDeadlinesSectionState extends ConsumerState<HomeDeadlinesSection> {
   }) {
     final urgentColor = const Color(0xFFFF4757);
 
-    return InkWell(
+    return BouncingTap(
       onTap: url.isNotEmpty
           ? () async {
               final uri = Uri.parse(url);
@@ -376,7 +377,7 @@ class _HomeDeadlinesSectionState extends ConsumerState<HomeDeadlinesSection> {
               }
             }
           : null,
-      borderRadius: BorderRadius.circular(12),
+      scaleFactor: 0.98,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uth_flow/core/services/widget_sync_service.dart';
 import 'package:uth_flow/features/auth/data/services/uth_portal_service.dart';
 import 'package:uth_flow/features/schedule/domain/schedule_model.dart';
 
@@ -283,11 +285,16 @@ class ScheduleRepositoryImpl implements ScheduleRepository {
         todayClasses.where((item) => !item.isFinished).toList();
     final isTodayFinished = todayClasses.isNotEmpty && todayActive.isEmpty;
 
-    return DailyScheduleData(
+    final result = DailyScheduleData(
       todayClasses: todayClasses,
       tomorrowClasses: tomorrowClasses,
       isTodayFinished: isTodayFinished,
     );
+
+    // Đồng bộ tức thì ra Home Screen Widget Android
+    unawaited(WidgetSyncService.syncSchedule(result).catchError((_) {}));
+
+    return result;
   }
 }
 

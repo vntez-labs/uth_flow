@@ -20,7 +20,25 @@ class AuthNotifier extends Notifier<AuthState> {
   @override
   AuthState build() {
     _repository = ref.watch(authRepositoryProvider);
-    return _repository.getInitialAuthState();
+    final initial = _repository.getInitialAuthState();
+    if (!initial.isAuthenticated) {
+      _tryAutoRestoreSession();
+    }
+    return initial;
+  }
+
+  void _tryAutoRestoreSession() {
+    Future.microtask(() async {
+      try {
+        final accounts = await _repository.getSavedAccounts();
+        if (accounts.isNotEmpty) {
+          final mostRecent = accounts.first;
+          if (mostRecent.token.isNotEmpty) {
+            await switchAccount(mostRecent);
+          }
+        }
+      } catch (_) {}
+    });
   }
 
   Future<bool> login(String input, String password) async {

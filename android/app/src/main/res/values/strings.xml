@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UTH Flow</string>
+    <string name="schedule_widget_title">Lịch học UTH</string>
+    <string name="schedule_widget_description">Xem nhanh lịch học hôm nay và ngày mai trên màn hình chính</string>
+</resources>

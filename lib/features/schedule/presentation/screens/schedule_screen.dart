@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uth_flow/core/widgets/bouncing_tap.dart';
+import 'package:uth_flow/core/widgets/schedule_widget_sheet.dart';
 import 'package:uth_flow/features/schedule/domain/schedule_model.dart';
 import 'package:uth_flow/features/schedule/presentation/controllers/schedule_controller.dart';
 
@@ -103,6 +105,15 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
         ),
         centerTitle: true,
         actions: [
+          IconButton(
+            tooltip: 'Thêm tiện ích ra màn hình chính',
+            icon: Icon(
+              SolarIconsOutline.widgetAdd,
+              color: primaryColor,
+              size: 21,
+            ),
+            onPressed: () => ScheduleWidgetSheet.show(context),
+          ),
           TextButton.icon(
             onPressed: _resetToToday,
             icon: Icon(
@@ -468,9 +479,9 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
     required bool isDark,
     required Color primaryColor,
   }) {
-    return GestureDetector(
+    return BouncingTap(
       onTap: () => _selectDay(cellDate),
-      behavior: HitTestBehavior.opaque,
+      scaleFactor: 0.90,
       child: Container(
         decoration: BoxDecoration(
           color: isSelected
@@ -667,14 +678,12 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
         ? item.timeToDisplay!
         : 'Đang sắp xếp';
 
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        // Chạm trực tiếp vào section của môn học để chuyển thẳng đến LMS Courses
-        onTap: () => _openLms(item.courseLmsUrl),
-        onLongPress: () =>
-            _showClassDetailModal(context, item, isDark, primaryColor),
-        child: Padding(
+    return BouncingTap(
+      onTap: () => _openLms(item.courseLmsUrl),
+      onLongPress: () =>
+          _showClassDetailModal(context, item, isDark, primaryColor),
+      scaleFactor: 0.98,
+      child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -847,8 +856,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   void _showClassDetailModal(

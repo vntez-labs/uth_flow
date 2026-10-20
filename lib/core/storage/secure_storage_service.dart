@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:uth_flow/features/auth/domain/models/saved_account_model.dart';
@@ -20,8 +21,14 @@ class SecureStorageService {
               aOptions: AndroidOptions(resetOnError: true),
             );
 
+  static bool get _isTesting =>
+      Platform.environment.containsKey('FLUTTER_TEST');
+
   Future<String?> _safeRead(String key) async {
     try {
+      if (_isTesting) {
+        return await _storage.read(key: key);
+      }
       return await _storage.read(key: key).timeout(
             const Duration(seconds: 2),
             onTimeout: () => null,
@@ -36,6 +43,10 @@ class SecureStorageService {
 
   Future<void> _safeWrite(String key, String value) async {
     try {
+      if (_isTesting) {
+        await _storage.write(key: key, value: value);
+        return;
+      }
       await _storage
           .write(key: key, value: value)
           .timeout(const Duration(seconds: 3));

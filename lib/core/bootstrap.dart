@@ -107,12 +107,10 @@ Future<void> bootstrap() async {
         );
       } catch (_) {}
 
-      // Khởi tạo SharedPreferences an toàn với cơ chế timeout (tránh treo vô hạn trên một số máy)
+      // Khởi tạo SharedPreferences trước khi khởi chạy ứng dụng để sẵn sàng nạp phiên đăng nhập
       SharedPreferences? prefs;
       try {
-        prefs = await SharedPreferences.getInstance().timeout(
-          const Duration(seconds: 3),
-        );
+        prefs = await SharedPreferences.getInstance();
       } catch (e) {
         debugPrint('[SharedPreferences Init Warning] $e');
       }

@@ -90,7 +90,7 @@ class MoodleEventModel {
       };
 
   factory MoodleEventModel.fromJson(Map<String, dynamic> json) {
-    String courseName = 'Không rõ môn học';
+    String courseName = json['courseName'] as String? ?? 'Không rõ môn học';
     if (json['course'] is Map) {
       courseName = json['course']['fullname'] as String? ??
           json['course']['shortname'] as String? ??

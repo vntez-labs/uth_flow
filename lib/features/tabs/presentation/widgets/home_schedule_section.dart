@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uth_flow/core/widgets/bouncing_tap.dart';
 import 'package:uth_flow/features/schedule/presentation/controllers/schedule_controller.dart';
 
 class HomeScheduleSection extends ConsumerWidget {
@@ -71,9 +72,9 @@ class HomeScheduleSection extends ConsumerWidget {
                       letterSpacing: -0.3,
                     ),
                   ),
-                  GestureDetector(
+                  BouncingTap(
                     onTap: () => context.go('/schedule'),
-                    behavior: HitTestBehavior.opaque,
+                    scaleFactor: 0.94,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -267,13 +268,11 @@ class HomeScheduleSection extends ConsumerWidget {
       } catch (_) {}
     }
 
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: canLaunch ? openLms : null,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
+    return BouncingTap(
+      onTap: canLaunch ? openLms : null,
+      scaleFactor: 0.98,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -485,7 +484,6 @@ class HomeScheduleSection extends ConsumerWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

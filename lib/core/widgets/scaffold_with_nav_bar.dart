@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
+import 'package:uth_flow/core/widgets/bouncing_tap.dart';
 
 class ScaffoldWithNavBar extends StatelessWidget {
   const ScaffoldWithNavBar({
@@ -174,9 +175,9 @@ class _NavBarTabItem extends StatelessWidget {
         ? Colors.white.withValues(alpha: 0.5)
         : const Color(0xFF6B6864);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return BouncingTap(
       onTap: onTap,
+      scaleFactor: 0.88,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
