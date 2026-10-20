@@ -40,11 +40,45 @@ final routerNotifierProvider = Provider<RouterNotifier>((ref) {
 
 final routerProvider = Provider<GoRouter>((ref) {
   final routerNotifier = ref.watch(routerNotifierProvider);
+  final isAuth = ref.read(authProvider).isAuthenticated;
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/home',
+    initialLocation: isAuth ? '/home' : '/login',
     refreshListenable: routerNotifier,
+    errorBuilder: (context, state) => Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.error_outline_rounded,
+                  size: 48,
+                  color: Color(0xFF008689),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Không tìm thấy trang yêu cầu',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () => context.go('/login'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF008689),
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Về màn hình đăng nhập'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
     redirect: (context, state) {
       final authState = ref.read(authProvider);
       final isLoggedIn = authState.isAuthenticated;

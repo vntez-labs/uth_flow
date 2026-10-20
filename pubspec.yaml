@@ -1,7 +1,7 @@
 name: uth_flow
 description: "UTH Flow - Trợ lý học tập thông minh dành cho sinh viên UTH: tra cứu thời khóa biểu, lịch học, điểm thi, học phí và truy cập LMS Courses một chạm."
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.0.1+1
 
 environment:
   sdk: ^3.13.5
