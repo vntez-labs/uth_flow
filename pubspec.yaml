@@ -1,0 +1,31 @@
+name: uth_flow
+description: "UTH Flow - Trợ lý học tập thông minh dành cho sinh viên UTH: tra cứu thời khóa biểu, lịch học, điểm thi, học phí và truy cập LMS Courses một chạm."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^3.4.3
+  flutter_secure_storage: ^11.2.0
+  go_router: ^18.1.0
+  google_fonts: ^9.0.0
+  http: ^1.6.0
+  shared_preferences: ^2.5.6
+  solar_icons: ^0.2.0
+  url_launcher: ^6.3.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  plugin_platform_interface: ^2.1.8
+  url_launcher_platform_interface: ^2.3.2
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/

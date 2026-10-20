@@ -1,0 +1,35 @@
+{
+    "name": "UTH Flow - Trợ lý sinh viên UTH",
+    "short_name": "UTH Flow",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#008689",
+    "theme_color": "#008689",
+    "description": "UTH Flow - Trợ lý học tập thông minh dành cho sinh viên UTH: tra cứu thời khóa biểu, lịch học, điểm thi, học phí và truy cập LMS Courses một chạm.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
