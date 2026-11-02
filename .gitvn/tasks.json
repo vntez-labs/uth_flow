@@ -7,7 +7,7 @@
       "id": "UTHFL-1",
       "title": "Khởi tạo dự án uth_flow & cấu trúc công việc",
       "description": "### Mục tiêu ban đầu\n\n- Khởi tạo dự án và thiết lập môi trường phát triển\n- Lên danh sách các tính năng cốt lõi\n- Cập nhật file `.gitvn/tasks.json`",
-      "status": "backlog",
+      "status": "todo",
       "priority": "high",
       "assignee": {
         "login": "hnamhocit",
@@ -20,7 +20,7 @@
       "sprintId": "sprint-1",
       "storyPoints": 3,
       "createdAt": "2026-11-02T06:19:26.506Z",
-      "updatedAt": "2026-11-02T06:31:01.873Z"
+      "updatedAt": "2026-11-02T06:31:03.126Z"
     }
   ],
   "sprints": [
